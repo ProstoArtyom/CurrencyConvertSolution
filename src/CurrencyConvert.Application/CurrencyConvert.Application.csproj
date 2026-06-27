@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CurrencyConvert.Domain\CurrencyConvert.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

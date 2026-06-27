@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CurrencyConvert.Application\CurrencyConvert.Application.csproj" />
+    <ProjectReference Include="..\CurrencyConvert.Infrastructure\CurrencyConvert.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
