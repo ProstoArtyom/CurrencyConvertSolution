@@ -16,7 +16,7 @@ namespace CurrencyConvert.Application.Services
                 .GetAll()
                 .Select(b => new BankDto
                 {
-                    Code = b.Code,
+                    Code = b.Code.ToString(),
                     Name = b.Name
                 })
                 .ToList();

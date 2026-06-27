@@ -1,5 +1,6 @@
 ﻿using CurrencyConvert.Application.Interfaces;
 using CurrencyConvert.Domain.Entities;
+using CurrencyConvert.Domain.Enums;
 
 namespace CurrencyConvert.Infrastructure
 {
@@ -9,13 +10,13 @@ namespace CurrencyConvert.Infrastructure
         [
             new()
             {
-                Code = "NBRB",
+                Code = BankCode.Nbrb,
                 Name = "Национальный банк Республики Беларусь",
                 ApiBaseUrl = "https://api.nbrb.by"
             },
             new()
             {
-                Code = "ALFABANK",
+                Code = BankCode.AlfaBank,
                 Name = "Альфа-Банк",
                 ApiBaseUrl = "https://developerhub.alfabank.by"
             }
