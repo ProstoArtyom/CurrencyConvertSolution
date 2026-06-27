@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="CurrencyConvert.WebAPI/CurrencyConvert.WebAPI.csproj" />
+  <Project Path="src/CurrencyConvert.WebAPI/CurrencyConvert.WebAPI.csproj" />
+  <Project Path="src/CurrencyConvert.Application/CurrencyConvert.Application.csproj" />
+  <Project Path="src/CurrencyConvert.Domain/CurrencyConvert.Domain.csproj" />
+  <Project Path="src/CurrencyConvert.Infrastructure/CurrencyConvert.Infrastructure.csproj" />
 </Solution>
