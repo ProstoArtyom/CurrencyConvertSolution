@@ -8,17 +8,9 @@ namespace CurrencyConvert.WebAPI.Controllers
     [Route("api/[controller]")]
     public class CurrencyController : ControllerBase
     {
-        private readonly IBankService _bankService;
-        public CurrencyController(IBankService bankService)
+        public CurrencyController()
         {
-            _bankService = bankService;
-        }
-
-        [HttpGet("banks")]
-        public async Task<IActionResult> GetBanks()
-        {
-            var banks = _bankService.GetBanks();
-            return Ok(banks);
+            
         }
     }
 }
