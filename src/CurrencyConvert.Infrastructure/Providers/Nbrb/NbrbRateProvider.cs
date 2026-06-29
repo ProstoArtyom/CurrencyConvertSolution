@@ -17,9 +17,9 @@ namespace CurrencyConvert.Infrastructure.Providers.Nbrb
         public async Task<decimal> GetRateAsync(string currencyCode, CancellationToken ct)
         {
             var response = await _httpClient.GetFromJsonAsync<NbrbRateResponse>(
-                $"exrates/rates/{currencyCode}", ct);
+                $"exrates/rates/{currencyCode}?parammode=2", ct);
 
-            return response!.Cur_OfficialRate;
+            return response!.Cur_OfficialRate / response.Cur_Scale;
         }
     }
 }

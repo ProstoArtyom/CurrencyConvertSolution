@@ -17,25 +17,19 @@ namespace CurrencyConvert.WebAPI.Controllers
         }
 
         [HttpGet("convert")]
-        public async Task<ActionResult<decimal>> ConvertFrom([FromQuery] ConvertRequestDto request, CancellationToken ct)
+        public async Task<ActionResult<decimal>> ConvertFrom([FromQuery] ConvertRequestDto request,
+            CancellationToken ct)
         {
             var bankCode = Enum.Parse<BankCode>(request.Bank, ignoreCase: true);
 
-            var result = await _currencyService.ConvertAsync(
+            var convertResponseDto = await _currencyService.ConvertAsync(
                 fromCurrency: request.From.ToUpper(),
                 toCurrency: request.To.ToUpper(),
                 amount: request.Amount,
                 bankCode: bankCode,
                 ct: ct);
 
-            return Ok(new ConvertResponseDto
-            {
-                From = request.From.ToUpper(),
-                To = request.To.ToUpper(),
-                Amount = request.Amount,
-                Bank = bankCode.ToString(),
-                Result = result
-            });
+            return Ok(convertResponseDto);
         }
     }
 }

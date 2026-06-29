@@ -7,5 +7,6 @@
         public decimal Amount { get; set; }
         public decimal Result { get; set; }
         public string Bank { get; set; }
+        public decimal Rate { get; set; }
     }
 }
