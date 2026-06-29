@@ -14,6 +14,10 @@ namespace CurrencyConvert.WebAPI.Controllers
             _bankService = bankService;
         }
 
+        /// <summary>
+        /// Get list of available banks
+        /// </summary>
+        /// <returns>List of available banks</returns>
         [HttpGet]
         public ActionResult<IEnumerable<BankDto>> GetBanks()
         {

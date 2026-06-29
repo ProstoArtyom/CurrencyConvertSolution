@@ -16,8 +16,17 @@ namespace CurrencyConvert.WebAPI.Controllers
             _currencyService = currencyService;
         }
 
+        /// <summary>
+        /// Convert currency
+        /// </summary>
+        /// <param name="from">Source currency (e.g., USD)</param>
+        /// <param name="to">Target currency (e.g., BYN)</param>
+        /// <param name="amount">Amount to convert</param>
+        /// <param name="bank">Bank code (Nbrb, Alfabank)</param>
+        /// <returns>ConvertResponseDto with exchange rate and conversion result</returns>
         [HttpGet("convert")]
-        public async Task<ActionResult<decimal>> ConvertFrom([FromQuery] ConvertRequestDto request,
+        public async Task<ActionResult<ConvertResponseDto>> ConvertFrom(
+            [FromQuery] ConvertRequestDto request,
             CancellationToken ct)
         {
             var bankCode = Enum.Parse<BankCode>(request.Bank, ignoreCase: true);
