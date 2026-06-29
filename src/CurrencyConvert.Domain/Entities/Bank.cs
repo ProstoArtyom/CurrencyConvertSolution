@@ -6,6 +6,5 @@ namespace CurrencyConvert.Domain.Entities
     {
         public BankCode Code { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string ApiBaseUrl { get; set; } = string.Empty;
     }
 }

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CurrencyConvert.Domain\CurrencyConvert.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ConvertRequestValidator\" />
+  </ItemGroup>
+
 </Project>
