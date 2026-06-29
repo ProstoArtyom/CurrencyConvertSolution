@@ -14,7 +14,8 @@ namespace CurrencyConvert.Application.Validators
 
             RuleFor(x => x.To)
                 .NotEmpty().WithMessage("To currency is required.")
-                .Length(3).WithMessage("Currency code must be 3 characters.");
+                .Length(3).WithMessage("Currency code must be 3 characters.")
+                .NotEqual(x => x.From).WithMessage("From and To can't be equal");
 
             RuleFor(x => x.Amount)
                 .GreaterThan(0).WithMessage("Amount must be greater than zero.");
