@@ -28,6 +28,8 @@ var bankSettings = builder.Configuration
 builder.Services.AddHttpClient<NbrbRateProvider>(c =>
     c.BaseAddress = new Uri(bankSettings.Nbrb.BaseUrl));
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddSingleton<IBankRegistry, BankRegistry>();
 
 builder.Services.AddScoped<IBankService, BankService>();

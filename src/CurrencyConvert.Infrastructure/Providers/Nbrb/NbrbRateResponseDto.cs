@@ -1,6 +1,6 @@
 ﻿namespace CurrencyConvert.Infrastructure.Providers.Nbrb
 {
-    public class NbrbRateResponse
+    public class NbrbRateResponseDto
     {
         public string? Cur_Abbreviation { get; set; }
         public int Cur_Scale { get; set; }

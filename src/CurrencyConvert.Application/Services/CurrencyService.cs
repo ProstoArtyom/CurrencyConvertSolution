@@ -20,7 +20,7 @@ namespace CurrencyConvert.Application.Services
             CancellationToken ct)
         {
             var provider = _factory.GetProvider(bankCode);
-            var rate = await GetCrossRateAsync(provider, fromCurrency, toCurrency, BaseCurrency, ct);
+            var rate = await GetCrossRateAsync(provider, fromCurrency, toCurrency, ct);
             return new ConvertResponseDto
             {
                 From = fromCurrency,
@@ -35,18 +35,37 @@ namespace CurrencyConvert.Application.Services
         private async Task<decimal> GetCrossRateAsync(
             IBankRateProvider provider,
             string from, string to,
-            string baseCurrency,
             CancellationToken ct)
         {
-            if (to == baseCurrency)
+            await ValidateCurrenciesAsync(provider, from, to, ct);
+
+            if (to == BaseCurrency)
                 return await provider.GetRateAsync(from, ct);
 
-            if (from == baseCurrency)
+            if (from == BaseCurrency)
                 return 1m / await provider.GetRateAsync(to, ct);
 
             var rateFrom = await provider.GetRateAsync(from, ct);
             var rateTo = await provider.GetRateAsync(to, ct);
             return rateFrom / rateTo;
+        }
+
+        private async Task ValidateCurrenciesAsync(
+            IBankRateProvider provider,
+            string from, string to,
+            CancellationToken ct)
+        {
+            var currenciesToCheck = new List<string>();
+
+            if (from != BaseCurrency) currenciesToCheck.Add(from);
+            if (to != BaseCurrency) currenciesToCheck.Add(to);
+
+            foreach (var currency in currenciesToCheck)
+            {
+                if (!await provider.SupportsCurrencyAsync(currency, ct))
+                    throw new NotSupportedException(
+                        $"Currency '{currency}' is not supported by {provider.BankCode}.");
+            }
         }
     }
 }

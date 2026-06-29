@@ -6,5 +6,6 @@ namespace CurrencyConvert.Application.Interfaces
     {
         BankCode BankCode { get; }
         Task<decimal> GetRateAsync(string currencyCode, CancellationToken ct);
+        Task<bool> SupportsCurrencyAsync(string currencyCode, CancellationToken ct);
     }
 }
