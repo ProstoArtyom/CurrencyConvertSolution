@@ -25,7 +25,7 @@ namespace CurrencyConvert.WebAPI.Controllers
         /// <param name="bank">Bank code (Nbrb, Alfabank)</param>
         /// <returns>ConvertResponseDto with exchange rate and conversion result</returns>
         [HttpGet("convert")]
-        public async Task<ActionResult<ConvertResponseDto>> ConvertFrom(
+        public async Task<ActionResult<ConvertResponseDto>> Convert(
             [FromQuery] ConvertRequestDto request,
             CancellationToken ct)
         {
