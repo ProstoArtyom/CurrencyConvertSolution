@@ -4,6 +4,7 @@ using CurrencyConvert.Application.Validators;
 using CurrencyConvert.Infrastructure.Banks;
 using CurrencyConvert.Infrastructure.Configuration;
 using CurrencyConvert.Infrastructure.Providers;
+using CurrencyConvert.Infrastructure.Providers.AlfaBank;
 using CurrencyConvert.Infrastructure.Providers.Nbrb;
 using CurrencyConvert.WebAPI.Middleware;
 using FluentValidation;
@@ -27,6 +28,8 @@ var bankSettings = builder.Configuration
 
 builder.Services.AddHttpClient<NbrbRateProvider>(c =>
     c.BaseAddress = new Uri(bankSettings.Nbrb.BaseUrl));
+builder.Services.AddHttpClient<AlfaBankRateProvider>(c =>
+    c.BaseAddress = new Uri(bankSettings.Alfabank.BaseUrl));
 
 builder.Services.AddMemoryCache();
 
@@ -36,6 +39,7 @@ builder.Services.AddScoped<IBankService, BankService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 
 builder.Services.AddTransient<IBankRateProvider, NbrbRateProvider>();
+builder.Services.AddTransient<IBankRateProvider, AlfaBankRateProvider>();
 builder.Services.AddTransient<IBankRateProviderFactory, BankRateProviderFactory>();
 
 var app = builder.Build();

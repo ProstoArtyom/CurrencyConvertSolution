@@ -40,13 +40,13 @@ namespace CurrencyConvert.Application.Services
             await ValidateCurrenciesAsync(provider, from, to, ct);
 
             if (to == BaseCurrency)
-                return await provider.GetRateAsync(from, ct);
+                return await provider.GetRateAsync(from, RateDirection.Sell, ct);
 
             if (from == BaseCurrency)
-                return 1m / await provider.GetRateAsync(to, ct);
+                return 1m / await provider.GetRateAsync(to, RateDirection.Buy, ct);
 
-            var rateFrom = await provider.GetRateAsync(from, ct);
-            var rateTo = await provider.GetRateAsync(to, ct);
+            var rateFrom = await provider.GetRateAsync(from, RateDirection.Sell, ct);
+            var rateTo = await provider.GetRateAsync(to, RateDirection.Buy, ct);
             return rateFrom / rateTo;
         }
 
@@ -55,12 +55,7 @@ namespace CurrencyConvert.Application.Services
             string from, string to,
             CancellationToken ct)
         {
-            var currenciesToCheck = new List<string>();
-
-            if (from != BaseCurrency) currenciesToCheck.Add(from);
-            if (to != BaseCurrency) currenciesToCheck.Add(to);
-
-            foreach (var currency in currenciesToCheck)
+            foreach (var currency in new[] { from, to }.Where(c => c != BaseCurrency))
             {
                 if (!await provider.SupportsCurrencyAsync(currency, ct))
                     throw new NotSupportedException(

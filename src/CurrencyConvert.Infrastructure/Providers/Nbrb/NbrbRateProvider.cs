@@ -20,10 +20,12 @@ namespace CurrencyConvert.Infrastructure.Providers.Nbrb
             _cache = cache;
         }
 
-        public async Task<decimal> GetRateAsync(string currencyCode, CancellationToken ct)
+        public async Task<decimal> GetRateAsync(string currencyCode, RateDirection direction, CancellationToken ct)
         {
-            var response = await _httpClient.GetFromJsonAsync<NbrbRateResponseDto>(
-                $"exrates/rates/{currencyCode}?parammode=2", ct);
+            var response = await _httpClient.GetFromJsonAsync<NbrbRateDto>(
+                $"exrates/rates/{currencyCode}?parammode=2", ct)
+                ?? throw new InvalidOperationException(
+                    $"{BankCode.ToString()} returned no data for currency '{currencyCode}'."); ;
 
             return response!.Cur_OfficialRate / response.Cur_Scale;
         }
