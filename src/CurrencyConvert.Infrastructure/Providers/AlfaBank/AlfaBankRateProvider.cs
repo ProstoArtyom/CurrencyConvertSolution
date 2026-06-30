@@ -9,7 +9,7 @@ namespace CurrencyConvert.Infrastructure.Providers.AlfaBank
     {
         public BankCode BankCode => BankCode.AlfaBank;
 
-        private const string CacheKey = "alfabank_currencies";
+        private const string CacheKey = "alfabank_rates";
         private const string BaseCurrency = "BYN";
 
         private readonly HttpClient _httpClient;
