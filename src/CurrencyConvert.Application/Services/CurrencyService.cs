@@ -32,6 +32,33 @@ namespace CurrencyConvert.Application.Services
             };
         }
 
+        public async Task<RateResultDto> GetRateAsync(string currency, BankCode bankCode, CancellationToken ct)
+        {
+            if (currency.Equals(BaseCurrency, StringComparison.OrdinalIgnoreCase))
+            {
+                return new RateResultDto
+                {
+                    Currency = currency.ToUpper(),
+                    BuyRate = 1m,
+                    SellRate = 1m,
+                    Bank = bankCode.ToString()
+                };
+            }
+
+            var provider = _factory.GetProvider(bankCode);
+            if (!await provider.SupportsCurrencyAsync(currency, ct))
+                throw new NotSupportedException(
+                    $"Currency '{currency}' is not supported by {bankCode}.");
+
+            return new RateResultDto
+            {
+                Currency = currency.ToUpper(),
+                BuyRate = await provider.GetRateAsync(currency, RateDirection.Buy, ct),
+                SellRate = await provider.GetRateAsync(currency, RateDirection.Sell, ct),
+                Bank = bankCode.ToString()
+            };
+        }
+
         private async Task<decimal> GetCrossRateAsync(
             IBankRateProvider provider,
             string from, string to,

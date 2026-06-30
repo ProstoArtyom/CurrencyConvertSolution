@@ -9,5 +9,9 @@ namespace CurrencyConvert.Application.Interfaces
             string fromCurrency, string toCurrency,
             decimal amount, BankCode bankCode,
             CancellationToken ct);
+
+        Task<RateResultDto> GetRateAsync(
+            string currency, BankCode bankCode,
+            CancellationToken ct);
     }
 }

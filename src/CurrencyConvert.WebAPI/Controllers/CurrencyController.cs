@@ -17,13 +17,11 @@ namespace CurrencyConvert.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Convert currency
+        /// Convert an amount from one currency to another using the selected bank's exchange rate.
         /// </summary>
-        /// <param name="from">Source currency (e.g., USD)</param>
-        /// <param name="to">Target currency (e.g., BYN)</param>
-        /// <param name="amount">Amount to convert</param>
-        /// <param name="bank">Bank code (Nbrb, Alfabank)</param>
-        /// <returns>ConvertResponseDto with exchange rate and conversion result</returns>
+        /// <param name="request">Source currency, target currency, amount, and bank code</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns>Conversion result including the applied rate</returns>
         [HttpGet("convert")]
         public async Task<ActionResult<ConvertResponseDto>> Convert(
             [FromQuery] ConvertRequestDto request,
@@ -39,6 +37,27 @@ namespace CurrencyConvert.WebAPI.Controllers
                 ct: ct);
 
             return Ok(convertResponseDto);
+        }
+
+        /// <summary>
+        /// Get the exchange rate of a currency against BYN from the selected bank.
+        /// </summary>
+        /// <param name="request">Currency code and bank code</param>
+        /// <param name="ct">Cancellation token</param>
+        /// <returns>Buy and sell rate for the currency from the selected bank</returns>
+        [HttpGet("rates")]
+        public async Task<ActionResult<RateResultDto>> GetRate(
+            [FromQuery] RateRequestDto request,
+            CancellationToken ct)
+        {
+            var bankCode = Enum.Parse<BankCode>(request.Bank, ignoreCase: true);
+
+            var result = await _currencyService.GetRateAsync(
+                currency: request.Currency.ToUpper(),
+                bankCode: bankCode,
+                ct: ct);
+
+            return Ok(result);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace CurrencyConvert.Infrastructure.Providers.Nbrb
             var response = await _httpClient.GetFromJsonAsync<NbrbRateDto>(
                 $"exrates/rates/{currencyCode}?parammode=2", ct)
                 ?? throw new InvalidOperationException(
-                    $"{BankCode.ToString()} returned no data for currency '{currencyCode}'."); ;
+                    $"{BankCode} returned no data for currency '{currencyCode}'."); ;
 
             return response!.Cur_OfficialRate / response.Cur_Scale;
         }

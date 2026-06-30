@@ -27,7 +27,7 @@ namespace CurrencyConvert.Infrastructure.Providers.AlfaBank
             var rates = await GetRatesAsync(ct);
             var rate = FindRateToBase(rates, currencyCode)
                 ?? throw new InvalidOperationException(
-                    $"{BankCode.ToString()} returned no {BaseCurrency} rate for currency '{currencyCode}'.");
+                    $"{BankCode} returned no {BaseCurrency} rate for currency '{currencyCode}'.");
 
             var rawRate = direction == RateDirection.Sell
                 ? rate.SellRate

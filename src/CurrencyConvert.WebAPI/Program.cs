@@ -18,6 +18,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<ConvertRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<RateRequestValidator>();
 
 builder.Services.Configure<BankSettings>(
     builder.Configuration.GetSection(BankSettings.SectionName));
